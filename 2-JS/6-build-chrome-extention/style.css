@@ -1,0 +1,67 @@
+:root {
+  --primary: #111199;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding-top: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  padding: 16px;
+  min-width: 300px;
+}
+
+.form {
+  display: grid;
+  gap: 4px;
+  max-width: 400px;
+}
+input {
+  width: 100%;
+  border: 1px solid lightblue;
+  border-radius: 4px;
+  display: block;
+  padding: 8px;
+}
+
+button {
+  cursor: pointer;
+  font-size: 12px;
+  display: inline-block;
+  border: none;
+  padding: 8px;
+  max-width: 120px;
+  background: linear-gradient(-45deg, #111199 70%, #11119980);
+  color: white;
+  border-radius: 8px;
+  transition: 0.3s box-shadow ease;
+  box-shadow:
+    1px 1px 10px #11119930,
+    1px 1px 20px #11119930;
+}
+
+button:hover {
+  box-shadow: 1px 1px 2px #11119930;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul li a {
+  text-decoration: none;
+}
+
+ul li {
+  color: var(--primary);
+}
+
+.buttons {
+  display: flex;
+  gap: 4px;
+}
