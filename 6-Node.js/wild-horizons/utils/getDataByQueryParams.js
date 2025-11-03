@@ -9,7 +9,7 @@ export function getDataByQueryParams(data, queryObj) {
   }
   
   if (is_open_to_public) {
-    data = data.filter(d => d.is_open_to_public === JSON.parse(is_open_to_public));
+    data = data.filter(d => d.is_open_to_public === JSON.parse(is_open_to_public.toLowerCase()));
   }
 
   return data;
