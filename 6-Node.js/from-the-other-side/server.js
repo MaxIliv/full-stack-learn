@@ -2,8 +2,14 @@ import http from 'node:http'
 
 const PORT = 8000;
 
+// console.log(import.meta);
+// __dirname - old school node.js
+// console.log(import.meta.dirname);
+
+const __dirname = import.meta.dirname;
+
 const server = http.createServer((req, res) => {
-  // 1. [] Identify what resources client want?
+  // 1. [x] Identify what resources client want?
   // 2. [] Identify path to that resource
   //    [] The current modules directory
   //    [] Path to the resource from that directory
