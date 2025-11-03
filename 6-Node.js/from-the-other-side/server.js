@@ -7,6 +7,11 @@ const PORT = 8000;
 // console.log(import.meta.dirname);
 
 const __dirname = import.meta.dirname;
+console.group('dirname', __dirname);
+
+// Path module
+// Current Working Directry CWD
+console.group('CWD', process.cwd())
 
 const server = http.createServer((req, res) => {
   // 1. [x] Identify what resources client want?
