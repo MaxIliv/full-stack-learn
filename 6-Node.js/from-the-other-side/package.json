@@ -1,0 +1,14 @@
+{
+  "name": "from-the-other-side",
+  "version": "1.0.0",
+  "description": "A platfrom for sharing spooky encounters",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+
+  }
+}
