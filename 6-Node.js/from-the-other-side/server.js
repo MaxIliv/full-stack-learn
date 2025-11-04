@@ -1,5 +1,6 @@
-import http from 'node:http'
+import http from 'node:http';
 import path from 'node:path';
+import fs from 'node:fs/promises';
 
 import { serveStatic } from './utils/serveStatic.js';
 // 1. [x] Identify what resources client want?
@@ -19,7 +20,7 @@ const PORT = 8000;
 // Current Working Directry CWD
 // console.group('CWD', process.cwd())
 
-// Absolute path 
+// Absolute path
 
 // Relative path
 
@@ -27,15 +28,20 @@ const __dirname = import.meta.dirname;
 
 serveStatic(__dirname);
 
-const server = http.createServer((req, res) => {
-
+const server = http.createServer(async (req, res) => {
   const asbolutePathToResource = path.join(__dirname, 'public', 'index.html');
 
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/html');
-  res.end('<html><h1>The server is working</h1></html>');
-})
+  try {
+    const content = await fs.readFile(asbolutePathToResource);
+
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/html');
+    res.end(content);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 server.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
-})
+});
