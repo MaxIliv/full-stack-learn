@@ -15,9 +15,19 @@ export async function handleApiGet({ res }) {
 // handle Post
 export async function handleApiPost({ req, res }) {
   console.log('POST received');
-  //  collect incoming payload
-  // parseJSONBody
-  // sanitize
-  // add new item
-  // send response to client
+  let body = '';
+
+  for await (const chunk of req) {
+    body += chunk;
+  }
+
+  const payload = JSON.parse(body);
+  console.log('[POST] payload: ', payload);
+
+  sendResponse({
+    res,
+    statusCode: 201,
+    payload: JSON.stringify(payload),
+    contentType: 'application/json'
+  })
 }
