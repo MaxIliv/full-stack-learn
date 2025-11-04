@@ -23,6 +23,19 @@ export async function serveStatic(req, res, baseDir) {
       contentType,
     });
   } catch (err) {
-    console.log(err);
+    if (err.code === 'ENOENT') {
+      const payload = await fs.readFile(path.join(publicDir, '404.html'));
+      sendResponse({
+        res,
+        statusCode: 404,
+        payload
+      })
+    } else {
+      sendResponse({
+        res,
+        statusCode: 500,
+        payload: '<html><h1>Ghosted :(</h1></html>'
+      })
+    }
   }
 }
