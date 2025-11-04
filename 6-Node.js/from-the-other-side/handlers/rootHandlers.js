@@ -2,6 +2,7 @@ import { parseJSONBody } from '../utils/parseJSONBody.js';
 import { sendResponse } from '../utils/sendResponse.js';
 import { addNewItem } from '../utils/addNewItem.js';
 import { getData } from '../utils/getData.js';
+import { sanitizeInput } from '../utils/sanitizeInput.js';
 
 // handleGet
 export async function handleApiGet({ res }) {
@@ -18,13 +19,14 @@ export async function handleApiGet({ res }) {
 export async function handleApiPost({ req, res }) {
   try {
     const parsedBody = await parseJSONBody(req);
-    await addNewItem(parsedBody);
-    const data = await getData();
+    const sanitizedBody = sanitizeInput(parsedBody);
+
+    await addNewItem(sanitizedBody);
 
     sendResponse({
       res,
       statusCode: 201,
-      payload: JSON.stringify(data),
+      payload: JSON.stringify(sanitizedBody),
       contentType: 'application/json',
     });
   } catch (err) {
