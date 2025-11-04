@@ -6,6 +6,27 @@ const PORT = 8000;
 const __dirname = import.meta.dirname;
 
 const server = http.createServer(async (req, res) => {
+  if (req.url === '/sub' && req.method === 'POST') {
+    let body = '';
+
+    for await (const chunk of req) {
+      body += chunk;
+    }
+
+    try {
+      const emailObj = JSON.parse(body);
+      console.log(emailObj);
+
+      res.statusCode = 201; // accepted
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify(emailObj));
+    } catch (e) {
+      console.log('invalid JSON', e);
+    }
+
+    return;
+  }
+
   if (req.url.startsWith('/api')) {
     if (req.method === 'GET') {
       return await handleApiGet({ res });
