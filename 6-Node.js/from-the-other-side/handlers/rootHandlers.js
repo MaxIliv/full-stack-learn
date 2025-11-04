@@ -1,5 +1,7 @@
-import { getData } from '../utils/getData.js';
+import { parseJSONBody } from '../utils/parseJSONBody.js';
 import { sendResponse } from '../utils/sendResponse.js';
+import { addNewItem } from '../utils/addNewItem.js';
+import { getData } from '../utils/getData.js';
 
 // handleGet
 export async function handleApiGet({ res }) {
@@ -14,20 +16,23 @@ export async function handleApiGet({ res }) {
 
 // handle Post
 export async function handleApiPost({ req, res }) {
-  console.log('POST received');
-  let body = '';
+  try {
+    const parsedBody = await parseJSONBody(req);
+    await addNewItem(parsedBody);
+    const data = await getData();
 
-  for await (const chunk of req) {
-    body += chunk;
+    sendResponse({
+      res,
+      statusCode: 201,
+      payload: JSON.stringify(data),
+      contentType: 'application/json',
+    });
+  } catch (err) {
+    sendResponse({
+      res,
+      statusCode: 400,
+      contentType: 'application/json',
+      payload: JSON.stringify({ error: err }),
+    });
   }
-
-  const payload = JSON.parse(body);
-  console.log('[POST] payload: ', payload);
-
-  sendResponse({
-    res,
-    statusCode: 201,
-    payload: JSON.stringify(payload),
-    contentType: 'application/json'
-  })
 }
