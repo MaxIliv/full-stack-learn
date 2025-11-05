@@ -3,6 +3,7 @@ import { sendResponse } from '../utils/sendResponse.js';
 import { addNewItem } from '../utils/addNewItem.js';
 import { getData } from '../utils/getData.js';
 import { sanitizeInput } from '../utils/sanitizeInput.js';
+import { SIGHTING_EVENT_ADD, sightingEmitter } from '../events/sightningEvents.js';
 
 // handleGet
 export async function handleApiGet({ res }) {
@@ -22,6 +23,8 @@ export async function handleApiPost({ req, res }) {
     const sanitizedBody = sanitizeInput(parsedBody);
 
     await addNewItem(sanitizedBody);
+
+    sightingEmitter.emit(SIGHTING_EVENT_ADD, sanitizedBody);
 
     sendResponse({
       res,
