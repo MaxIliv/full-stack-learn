@@ -1,6 +1,10 @@
 import http from 'node:http';
 import { serveStatic } from './utils/serveStatic.js';
-import { handleApiGet, handleApiPost } from './handlers/rootHandlers.js';
+import {
+  handleApiGet,
+  handleApiPost,
+  handleNews,
+} from './handlers/rootHandlers.js';
 
 const PORT = 8000;
 const __dirname = import.meta.dirname;
@@ -27,7 +31,9 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  if (req.url.startsWith('/api')) {
+  if (req.url === '/api/news') {
+    return await handleNews(req, res);
+  } else if (req.url.startsWith('/api')) {
     if (req.method === 'GET') {
       return await handleApiGet({ res });
     }

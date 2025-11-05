@@ -3,7 +3,11 @@ import { sendResponse } from '../utils/sendResponse.js';
 import { addNewItem } from '../utils/addNewItem.js';
 import { getData } from '../utils/getData.js';
 import { sanitizeInput } from '../utils/sanitizeInput.js';
-import { SIGHTING_EVENT_ADD, sightingEmitter } from '../events/sightningEvents.js';
+import {
+  SIGHTING_EVENT_ADD,
+  sightingEmitter,
+} from '../events/sightningEvents.js';
+import { stories } from '../data/stories.js';
 
 // handleGet
 export async function handleApiGet({ res }) {
@@ -40,4 +44,28 @@ export async function handleApiPost({ req, res }) {
       payload: JSON.stringify({ error: err }),
     });
   }
+}
+
+function sentRandom(res) {
+  let randomIndex = Math.floor(Math.random() * stories.length);
+
+  const story = stories[randomIndex];
+
+  res.write(
+    `data:${JSON.stringify({
+      event: 'news-update',
+      story,
+    })}\n\n` // end of message block
+  );
+}
+
+export function handleNews(req, res) {
+  res.statusCode = 200;
+
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+
+  sentRandom(res);
+  setInterval(() => sentRandom(res), 3000);
 }
