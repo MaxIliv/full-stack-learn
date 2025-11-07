@@ -1,6 +1,0 @@
-{
-	"dependencies": {
-		"@huggingface/inference": "^4.13.2",
-		"react-markdown": "^10.1.0"
-	}
-}
