@@ -6,11 +6,13 @@ You are an assistant that receives a list of ingredients that a user has and sug
 
 const hf = new InferenceClient(import.meta.env.VITE_AI_KEY);
 
+const MODEL = 'meta-llama/Llama-3.1-8B-Instruct';
+
 export async function getRecipeFromMistral(ingredientsArr: string[]) {
   const ingredientsString = ingredientsArr.join(', ');
   try {
     const response = await hf.chatCompletion({
-      model: "Qwen/Qwen3-32B",
+      model: MODEL,
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
         {
